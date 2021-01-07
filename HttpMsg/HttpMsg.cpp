@@ -27,7 +27,7 @@ QString HttpMsg::RequestPostForm(bool enablehttps,const QString &url, const QByt
     {
         QSslConfiguration config = qnr.sslConfiguration();
         config.setPeerVerifyMode(QSslSocket::VerifyNone);
-        config.setProtocol(QSsl::TlsV1SslV3);
+        config.setProtocol(QSsl::TlsV1_3);
         qnr.setSslConfiguration(config);
     }
 
@@ -40,8 +40,8 @@ QString HttpMsg::RequestPostForm(bool enablehttps,const QString &url, const QByt
     connect( reply,SIGNAL(finished()),&eventloop,SLOT(quit()));
     eventloop.exec( QEventLoop::ExcludeUserInputEvents);
 
-    QTextCodec *codec = QTextCodec::codecForName("utf8");
-    QString replyData = codec->toUnicode( reply->readAll() );
+//    QTextCodec *codec = QTextCodec::codecForName("utf8");
+    QString replyData =  reply->readAll();
 
     reply->deleteLater();
     reply = nullptr;
@@ -60,7 +60,7 @@ QByteArray HttpMsg::RequestGet(bool enablehttps,const QString &url)
     {
         QSslConfiguration config = qnr.sslConfiguration();
         config.setPeerVerifyMode(QSslSocket::VerifyNone);
-        config.setProtocol(QSsl::TlsV1SslV3);
+        config.setProtocol(QSsl::TlsV1_3);
         qnr.setSslConfiguration(config);
     }
 

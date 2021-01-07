@@ -8,7 +8,6 @@
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkReply>
 #include <QEventLoop>
-#include <QTextCodec>
 
 
 class HttpMsg:public QObject
