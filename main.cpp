@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     TextTranslation m_TextTranslation("20201020000594558","MB7lLwBLXBBL9I6iWje8");
-    qDebug()<<m_TextTranslation.getTranslation("Banana",Translate_Language_AUTO,Translate_Language_ZH);
+    m_TextTranslation.getTranslation("Banana",Translate_Language_AUTO,Translate_Language_ZH);
 
 
     QQuickView engine;

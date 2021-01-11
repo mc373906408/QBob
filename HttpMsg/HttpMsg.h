@@ -10,24 +10,42 @@
 #include <QEventLoop>
 
 
+class HttpMsgInterface;
+
 class HttpMsg:public QObject
 {
     Q_OBJECT
 public:
     static HttpMsg& getInstance();
 
-    QString RequestPostForm(bool enablehttps,const QString &url, const QByteArray &data);
+//    QString RequestPostForm(bool enablehttps,const QString &url, const QByteArray &data);
 
     /**
-     * @brief RequestGet 从http接口中获取
-     * @param urlSuffix http后缀
-     * @param seturl http前缀 https://wb2.fudaojun.com/
+     * @brief requestGet Get请求
+     * @param url
      * @return
      */
-    QByteArray RequestGet(bool enablehttps,const QString &url);
+    QString requestGet(const QString &url);
 
+    /**
+     * @brief addObject  如果需要回调，就加入列表
+     * @param obj
+     */
+    void addObject(HttpMsgInterface* obj);
 
-public slots:
+    /**
+     * @brief delObject  删掉回调
+     * @param obj
+     */
+    void delObject(HttpMsgInterface* obj);
+
+    /**
+     * @brief delObject 重载，清理所有回调（应该不会调吧）
+     */
+    void delObject();
+
+private slots:
+
 private:
     HttpMsg();
     ~HttpMsg();
@@ -36,6 +54,10 @@ private:
     HttpMsg(const HttpMsg &sg) =delete ;
     HttpMsg &operator=(const HttpMsg &sg)=delete ;
 
+private:
+    QNetworkAccessManager *m_manager;
+
+    QList<HttpMsgInterface*> m_InterfaceList;
 };
 
 #endif

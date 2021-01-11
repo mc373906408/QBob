@@ -55,7 +55,7 @@ set(PROJECT_SOURCES
         Log/TSpdlogAssistant.h
         HttpMsg/HttpMsg.cpp
         HttpMsg/HttpMsg.h
-
+        HttpMsg/HttpMsgInterface.h
         )
 
 # QT版本控制，不用动
