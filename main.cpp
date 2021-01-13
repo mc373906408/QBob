@@ -6,9 +6,7 @@
 
 int main(int argc, char *argv[])
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+    /*QT6现在默认支持并开启highDPI https://doc.qt.io/qt-6/highdpi.html*/
     QApplication app(argc, argv);
 
     TextTranslation m_TextTranslation("20201020000594558","MB7lLwBLXBBL9I6iWje8");
