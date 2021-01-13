@@ -22,7 +22,7 @@ QString TextTranslation::getTranslation(const QString &q, const QString &fromLan
 {
     int salt=QRandomGenerator::global()->bounded(32768, 65536);
     QString sign=m_appID+q+QString::number(salt)+m_secretKey;
-    sign=QCryptographicHash::hash(sign.toLatin1(),QCryptographicHash::Md5).toHex();
+    sign=QCryptographicHash::hash(sign.toUtf8(), QCryptographicHash::Md5).toHex();
     QString url=QString("https://fanyi-api.baidu.com/api/trans/vip/translate?q=%1&from=%2&to=%3&appid=%4&salt=%5&sign=%6")
             .arg(q).arg(fromLang).arg(toLang).arg(m_appID).arg(salt).arg(sign);
     m_requestUrl << HttpMsg::getInstance().requestGet(url);

@@ -6,8 +6,9 @@
 
 int main(int argc, char *argv[])
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
+#endif
     QApplication app(argc, argv);
 
     TextTranslation m_TextTranslation("20201020000594558","MB7lLwBLXBBL9I6iWje8");
