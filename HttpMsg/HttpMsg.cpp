@@ -44,38 +44,28 @@ HttpMsg::~HttpMsg()
 }
 
 
-//QString HttpMsg::RequestPostForm(bool enablehttps,const QString &url, const QByteArray &data)
-//{
+QString HttpMsg::requestPostForm(const QString &url, const QByteArray &data)
+{
 
-//    QNetworkAccessManager qnam;
-//    const QUrl aurl( url );
-//    QNetworkRequest qnr( aurl );
+    const QUrl aurl(url);
+    QNetworkRequest qnr( aurl );
 
-//    if(enablehttps)
-//    {
-//        QSslConfiguration config = qnr.sslConfiguration();
-//        config.setPeerVerifyMode(QSslSocket::VerifyNone);
-//        config.setProtocol(QSsl::TlsV1_3);
-//        qnr.setSslConfiguration(config);
-//    }
+    /*启动tls*/
+    if(url.contains(QRegularExpression("^https://")))
+    {
+        QSslConfiguration config = qnr.sslConfiguration();
+        config.setProtocol(QSsl::SecureProtocols);  //自动协商
+        qnr.setSslConfiguration(config);
+    }
 
-//    qnr.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
-//    qnr.setHeader(QNetworkRequest::ContentLengthHeader,data.size());
+    qnr.setHeader(QNetworkRequest::ContentTypeHeader,"application/x-www-form-urlencoded");
+    qnr.setHeader(QNetworkRequest::ContentLengthHeader,data.size());
 
-//    QNetworkReply *reply = qnam.post( qnr, data );
+    m_manager->post(qnr,data);
 
-//    QEventLoop eventloop;
-//    connect( reply,SIGNAL(finished()),&eventloop,SLOT(quit()));
-//    eventloop.exec( QEventLoop::ExcludeUserInputEvents);
-
-////    QTextCodec *codec = QTextCodec::codecForName("utf8");
-//    QString replyData =  reply->readAll();
-
-//    reply->deleteLater();
-//    reply = nullptr;
-
-//    return replyData;
-//}
+    /*返回url 作为唯一ID*/
+    return qnr.url().toString();
+}
 
 
 QString HttpMsg::requestGet(const QString &url)

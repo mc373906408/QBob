@@ -18,7 +18,13 @@ class HttpMsg:public QObject
 public:
     static HttpMsg& getInstance();
 
-//    QString RequestPostForm(bool enablehttps,const QString &url, const QByteArray &data);
+    /**
+     * @brief requestPostForm Post请求
+     * @param url
+     * @param data
+     * @return
+     */
+    QString requestPostForm(const QString &url, const QByteArray &data);
 
     /**
      * @brief requestGet Get请求
