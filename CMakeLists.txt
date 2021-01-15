@@ -46,10 +46,10 @@ include_directories(3rd)
 # 源文件  cpp\h\qrc\hpp\c
 set(PROJECT_SOURCES
         main.cpp
-        qml.qrc
+        Qml/qml.qrc
         TranslateAPI/TranslateEnum.h
-        TranslateAPI/Baidu/TextTranslation.h
-        TranslateAPI/Baidu/TextTranslation.cpp
+        TranslateAPI/Baidu/BaiduTranslation.h
+        TranslateAPI/Baidu/BaiduTranslation.cpp
         Log/HashList.cpp
         Log/HashList.h
         Log/TSpdlog.cpp
@@ -59,6 +59,12 @@ set(PROJECT_SOURCES
         HttpMsg/HttpMsg.cpp
         HttpMsg/HttpMsg.h
         HttpMsg/HttpMsgInterface.h
+        TranslateAPI/Baidu/BaiduOCR.h
+        TranslateAPI/Baidu/BaiduOCR.cpp
+        Tools/Tools.h
+        Tools/Tools.cpp
+        ScreenCapture/ScreenCapture.h
+        ScreenCapture/ScreenCapture.cpp
         )
 
 # QT版本控制，不用动

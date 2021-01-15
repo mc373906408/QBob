@@ -1,4 +1,4 @@
-﻿#include "TextTranslation.h"
+﻿#include "BaiduTranslation.h"
 #include <QRandomGenerator>
 #include <QCryptographicHash>
 #include "HttpMsg/HttpMsg.h"
@@ -6,19 +6,19 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-TextTranslation::TextTranslation(QString appID, QString secretKey)
+BaiduTranslation::BaiduTranslation(QString appID, QString secretKey)
 {
     m_appID=appID;
     m_secretKey=secretKey;
     HttpMsg::getInstance().addObject(this);
 }
 
-TextTranslation::~TextTranslation()
+BaiduTranslation::~BaiduTranslation()
 {
     HttpMsg::getInstance().delObject(this);
 }
 
-QString TextTranslation::getTranslation(const QString &q, const QString &fromLang, const QString &toLang)
+QString BaiduTranslation::getTranslation(const QString &q, const QString &fromLang, const QString &toLang)
 {
     int salt=QRandomGenerator::global()->bounded(32768, 65536);
     QString sign=m_appID+q+QString::number(salt)+m_secretKey;
@@ -29,7 +29,7 @@ QString TextTranslation::getTranslation(const QString &q, const QString &fromLan
     return "";
 }
 
-void TextTranslation::handleCallback(const QString &id, const QByteArray &replyData)
+void BaiduTranslation::handleCallback(const QString &id, const QByteArray &replyData)
 {
     if(m_requestUrl.contains(id)){
         QJsonDocument document=QJsonDocument::fromJson(replyData);

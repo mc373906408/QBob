@@ -60,6 +60,7 @@ private:
     HttpMsg(const HttpMsg &sg) =delete ;
     HttpMsg &operator=(const HttpMsg &sg)=delete ;
 
+
 private:
     QNetworkAccessManager *m_manager;
 

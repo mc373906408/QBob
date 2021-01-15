@@ -4,12 +4,12 @@
 #include <QObject>
 #include "HttpMsg/HttpMsgInterface.h"
 
-class TextTranslation:public QObject,public HttpMsgInterface
+class BaiduTranslation:public QObject,public HttpMsgInterface
 {
     Q_OBJECT
 public:
-    TextTranslation(QString appID,QString secretKey);
-    ~TextTranslation();
+    BaiduTranslation(QString appID,QString secretKey);
+    ~BaiduTranslation();
 
     /*执行翻译*/
     QString getTranslation(const QString &q,const QString &fromLang,const QString &toLang);
