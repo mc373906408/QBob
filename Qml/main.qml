@@ -3,26 +3,20 @@ import QtQuick.Window
 
 
 Item {
-    width: 640
-    height: 480
+    width: 300
+    height: 300
     visible: true
 
+    /*动态加载window*/
     Connections{
         target:cppScreenCapture
         property var taskMap:{0:0}
-        function onSgOpenNewWindow(father,jsonmsg){
+        function onSgOpenWindow(parent,jsonmsg){
             var json=JSON.parse(jsonmsg)
-            var component;
-            if(father===null){
-                component=itemCompont.createObject(root_father,json)
-            }else{
-                component=itemCompont.createObject(father,json)
-            }
-
-            taskMap[json["objectName"]]=component
+            taskMap[json["objectName"]]=itemCompont.createObject(parent,json)
         }
-        function onSgCloseWindow(name){
-            taskMap[name].destroy()
+        function onSgCloseWindow(objectName){
+            taskMap[objectName].destroy()
         }
     }
 
@@ -31,6 +25,17 @@ Item {
         Window{
             id:m_window
             visible:true
+            Image {
+                id: img
+                anchors.fill: parent
+            }
+            Connections{
+                target: cppScreenCapture
+                function onSgRefeshPixmap(){
+                    img.source=""
+                    img.source="image://screenshot"
+                }
+            }
         }
     }
 }

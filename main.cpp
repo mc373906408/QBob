@@ -14,16 +14,23 @@ int main(int argc, char *argv[])
     m_TextTranslation.getTranslation("Banana",Translate_Language_AUTO,Translate_Language_ZH);
 
 
-    QQuickView engine;
+    QQuickView view;
+    QQmlEngine *engine=view.engine();
     /*将自身注册到qml中*/
-    engine.rootContext()->setContextProperty("cppWindow",&engine);
+    view.rootContext()->setContextProperty("cppWindow",&view);
 
     /*将截图模块注册到qml中*/
-    engine.rootContext()->setContextProperty("cppScreenCapture",&ScreenCapture::getInstance());
+    view.rootContext()->setContextProperty("cppScreenCapture",&ScreenCapture::getInstance());
 
+    /*将截图后的图片加载到qml中*/
+    engine->addImageProvider("screenshot",ScreenCapture::getInstance().getPixmapProvider());
 
-    engine.setSource(QUrl("qrc:/main.qml"));
-    engine.show();
+    view.setSource(QUrl("qrc:/main.qml"));
+    view.show();
 
-    return app.exec();
+    ScreenCapture::getInstance().startScreenshot();
+
+    int rv=app.exec();
+
+    return rv;
 }
