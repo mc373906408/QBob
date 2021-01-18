@@ -3,9 +3,9 @@ import QtQuick.Window
 
 
 Item {
-    width: 300
-    height: 300
-    visible: true
+    width: 0
+    height: 0
+    visible: false
 
     /*动态加载window*/
     Connections{
@@ -25,6 +25,8 @@ Item {
         Window{
             id:m_window
             visible:true
+//            flags: Qt.Dialog|Qt.FramelessWindowHint|Qt.WindowCloseButtonHint|Qt.MSWindowsFixedSizeDialogHint
+            flags: Qt.Dialog|Qt.FramelessWindowHint|Qt.WindowCloseButtonHint|Qt.WindowStaysOnTopHint
             Image {
                 id: img
                 anchors.fill: parent

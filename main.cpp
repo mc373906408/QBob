@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     engine->addImageProvider("screenshot",ScreenCapture::getInstance().getPixmapProvider());
 
     view.setSource(QUrl("qrc:/main.qml"));
-    view.show();
+//    view.show();
 
     ScreenCapture::getInstance().startScreenshot();
 
