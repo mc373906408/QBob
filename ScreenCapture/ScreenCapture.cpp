@@ -42,7 +42,6 @@ void ScreenCapture::allScreenshot()
 
     QList<QPixmap> scrs;
     int w = 0, h = 0, p = 0;
-    QList<qreal> dotsPerInch;
     foreach (auto scr, screens) {
         /*获取窗口起点位置，左上窗口的左上角就是起点*/
         if(scr->geometry().topLeft().x()<m_startPoint.x()){
@@ -53,15 +52,15 @@ void ScreenCapture::allScreenshot()
         QPixmap pix = scr->grabWindow(0);
         w += static_cast<int>(pix.width()/pix.devicePixelRatio());
         h += static_cast<int>(pix.height()/pix.devicePixelRatio());
+        /*TODO 这里需要做排序，目前这里有问题*/
         scrs << pix;
-        dotsPerInch<<pix.devicePixelRatio();
     }
     m_screenshot=QPixmap(w, h);
     QPainter painter(&m_screenshot);
     m_screenshot.fill(Qt::black);
     foreach (auto scr, scrs) {
         painter.drawPixmap(QPoint(p, 0), scr);
-        p += static_cast<int>(scr.width()/dotsPerInch.first());
+        p += static_cast<int>(scr.width()/scr.devicePixelRatio());
     }
     return;
 }
