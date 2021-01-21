@@ -1,4 +1,4 @@
-#ifndef TOOLS_H
+﻿#ifndef TOOLS_H
 #define TOOLS_H
 
 #include <QObject>
@@ -16,6 +16,12 @@ public:
      */
     QByteArray imageToBase64(const QImage& image);
 
+    /**
+     * @brief getZoomFactor 获取屏幕DPI
+     * @param id
+     * @return
+     */
+    double getZoomFactor(int id=0);
 private:
     Tools();
 
