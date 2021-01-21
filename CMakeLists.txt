@@ -1,10 +1,20 @@
 ﻿# 最低版本号
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.15)
 
 # 项目信息
 project(QBob 
     VERSION 0.0.1
     LANGUAGES CXX)
+
+
+# Use folders in the resulting project files.
+set_property(GLOBAL PROPERTY OS_FOLDERS ON)
+
+# 设置ROOT目录
+set(PROJECT_ROOT "${CMAKE_CURRENT_SOURCE_DIR}")
+
+# 加载cmake子模块
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_ROOT}/cmake")
 
 # 自动添加CMAKE_CURRENT_BINARY_DIR和CMAKE_CURRENT_SOURCE_DIR到当前处理的CMakeLists.txt
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -34,8 +44,11 @@ add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x050F00)
 # 引入外部依赖包，同时需要修改target_link_libraries
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickWidgets Network REQUIRED)
 
+
 # 引入头文件路径
 include_directories(3rd)
+include_directories(3rd/qhook/include)
+link_directories(3rd/qhook/lib)
 
 # 源文件  cpp\h\qrc\hpp\c
 set(PROJECT_SOURCES
@@ -57,6 +70,8 @@ set(PROJECT_SOURCES
     TranslateAPI/Baidu/BaiduOCR.cpp
     Tools/Tools.h
     Tools/Tools.cpp
+    Tools/WindowHook.h
+    Tools/WindowHook.cpp
     ScreenCapture/ScreenCapture.h
     ScreenCapture/ScreenCapture.cpp
     )
@@ -75,13 +90,19 @@ endif()
 # 宏定义
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
+
+
+
 # 将目标文件与库文件进行链接
 target_link_libraries(${PROJECT_NAME}
     PRIVATE Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Quick
     Qt${QT_VERSION_MAJOR}::QuickWidgets
     Qt${QT_VERSION_MAJOR}::Network
-    D3D11 DXGI)
+    QHook user32
+    )
+
 
 # 构造完成后执行
 #add_custom_command(TARGET

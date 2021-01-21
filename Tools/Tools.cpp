@@ -59,3 +59,25 @@ double Tools::getZoomFactor(int id)
     return 1.0;
 #endif
 }
+
+
+int Tools::getMouseDesktopInt(const QPoint &mouse){
+    auto lscreens = QGuiApplication::screens();
+    int i =0;
+
+    foreach(auto scr ,lscreens){
+        int x1=scr->geometry().x();
+        int y1=scr->geometry().y();
+        int x2=scr->geometry().width()+x1;
+        int y2=scr->geometry().height()+y1;
+        if(mouse.x()>=x1&&mouse.x()<=x2)
+        {
+            if(mouse.y()>=y1&&mouse.y()<=y2)
+            {
+                return i;
+            }
+        }
+        i++;
+    }
+    return 0;
+}

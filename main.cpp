@@ -4,6 +4,7 @@
 #include "TranslateAPI/TranslateEnum.h"
 #include "TranslateAPI/Baidu/BaiduTranslation.h"
 #include "ScreenCapture/ScreenCapture.h"
+#include "Tools/WindowHook.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,8 @@ int main(int argc, char *argv[])
     BaiduTranslation m_TextTranslation("20201020000594558","MB7lLwBLXBBL9I6iWje8");
     m_TextTranslation.getTranslation("Banana",Translate_Language_AUTO,Translate_Language_ZH);
 
+    /*启用windowhook*/
+    WindowHook::getInstance();
 
     QQuickView view;
     QQmlEngine *engine=view.engine();
@@ -28,7 +31,7 @@ int main(int argc, char *argv[])
     view.setSource(QUrl("qrc:/main.qml"));
 //    view.show();
 
-    ScreenCapture::getInstance().startScreenshot();
+
 
     int rv=app.exec();
 

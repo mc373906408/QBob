@@ -22,6 +22,13 @@ public:
      * @return
      */
     double getZoomFactor(int id=0);
+
+    /**
+     * @brief getMouseDesktopInt 根据坐标判断屏幕序列号
+     * @param mouse
+     * @return
+     */
+    int getMouseDesktopInt(const QPoint &mouse);
 private:
     Tools();
 
