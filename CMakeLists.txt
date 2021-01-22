@@ -49,6 +49,8 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickWidgets Network RE
 include_directories(3rd)
 include_directories(3rd/qhook/include)
 link_directories(3rd/qhook/lib)
+include_directories(3rd/EasyLogger/include)
+link_directories(3rd/EasyLogger/lib)
 
 # 源文件  cpp\h\qrc\hpp\c
 set(PROJECT_SOURCES
@@ -57,12 +59,8 @@ set(PROJECT_SOURCES
     TranslateAPI/TranslateEnum.h
     TranslateAPI/Baidu/BaiduTranslation.h
     TranslateAPI/Baidu/BaiduTranslation.cpp
-    Log/HashList.cpp
-    Log/HashList.h
-    Log/TSpdlog.cpp
-    Log/TSpdlog.h
-    Log/TSpdlogAssistant.cpp
-    Log/TSpdlogAssistant.h
+    Log/ThirdEasyLogger.cpp
+    Log/ThirdEasyLogger.h
     HttpMsg/HttpMsg.cpp
     HttpMsg/HttpMsg.h
     HttpMsg/HttpMsgInterface.h
@@ -101,6 +99,8 @@ target_link_libraries(${PROJECT_NAME}
     Qt${QT_VERSION_MAJOR}::QuickWidgets
     Qt${QT_VERSION_MAJOR}::Network
     QHook user32
+    EasyLogger
+    pthreadVC2
     )
 
 
