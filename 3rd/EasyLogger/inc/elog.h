@@ -74,52 +74,76 @@ extern "C" {
 
 #ifndef ELOG_OUTPUT_ENABLE
     #define elog_assert(tag, ...)
+    #define elog_assert_info(tag, file, func, line, ...)
     #define elog_error(tag, ...)
+    #define elog_error_info(tag, file, func, line, ...)
     #define elog_warn(tag, ...)
+    #define elog_warn_info(tag, file, func, line, ...)
     #define elog_info(tag, ...)
+    #define elog_info_info(tag, file, func, line, ...)
     #define elog_debug(tag, ...)
+    #define elog_debug_info(tag, file, func, line, ...)
     #define elog_verbose(tag, ...)
+    #define elog_verbose_info(tag, file, func, line, ...)
 #else /* ELOG_OUTPUT_ENABLE */
     #if ELOG_OUTPUT_LVL >= ELOG_LVL_ASSERT
         #define elog_assert(tag, ...) \
                 elog_output(ELOG_LVL_ASSERT, tag, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
+        #define elog_assert_info(tag, file, func, line, ...) \
+                elog_output(ELOG_LVL_ASSERT, tag, file, func, line, __VA_ARGS__)
     #else
         #define elog_assert(tag, ...)
+        #define elog_assert_info(tag, file, func, line, ...)
     #endif /* ELOG_OUTPUT_LVL >= ELOG_LVL_ASSERT */
 
     #if ELOG_OUTPUT_LVL >= ELOG_LVL_ERROR
         #define elog_error(tag, ...) \
                 elog_output(ELOG_LVL_ERROR, tag, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
+        #define elog_error_info(tag, file, func, line, ...) \
+                elog_output(ELOG_LVL_ERROR, tag, file, func, line, __VA_ARGS__)
     #else
         #define elog_error(tag, ...)
+        #define elog_error_info(tag, file, func, line, ...)
     #endif /* ELOG_OUTPUT_LVL >= ELOG_LVL_ERROR */
 
     #if ELOG_OUTPUT_LVL >= ELOG_LVL_WARN
         #define elog_warn(tag, ...) \
                 elog_output(ELOG_LVL_WARN, tag, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
+        #define elog_warn_info(tag, file, func, line, ...) \
+                elog_output(ELOG_LVL_WARN, tag, file, func, line, __VA_ARGS__)
     #else
         #define elog_warn(tag, ...)
+        #define elog_warn_info(tag, file, func, line, ...)
     #endif /* ELOG_OUTPUT_LVL >= ELOG_LVL_WARN */
 
     #if ELOG_OUTPUT_LVL >= ELOG_LVL_INFO
         #define elog_info(tag, ...) \
                 elog_output(ELOG_LVL_INFO, tag, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
+        #define elog_info_info(tag, file, func, line, ...) \
+                elog_output(ELOG_LVL_INFO, tag, file, func, line, __VA_ARGS__)
     #else
         #define elog_info(tag, ...)
+        #define elog_info_info(tag, file, func, line, ...)
     #endif /* ELOG_OUTPUT_LVL >= ELOG_LVL_INFO */
 
     #if ELOG_OUTPUT_LVL >= ELOG_LVL_DEBUG
         #define elog_debug(tag, ...) \
                 elog_output(ELOG_LVL_DEBUG, tag, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
+        #define elog_debug_info(tag, file, func, line, ...) \
+                elog_output(ELOG_LVL_DEBUG, tag, file, func, line, __VA_ARGS__)
     #else
         #define elog_debug(tag, ...)
+        #define elog_debug_info(tag, file, func, line, ...)
     #endif /* ELOG_OUTPUT_LVL >= ELOG_LVL_DEBUG */
 
     #if ELOG_OUTPUT_LVL == ELOG_LVL_VERBOSE
         #define elog_verbose(tag, ...) \
                 elog_output(ELOG_LVL_VERBOSE, tag, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
+        #define elog_verbose_info(tag, file, func, line,  ...) \
+                elog_output(ELOG_LVL_VERBOSE, tag, file, func, line, __VA_ARGS__)
     #else
         #define elog_verbose(tag, ...)
+        #define elog_verbose_info(tag, file, func, line, ...)
     #endif /* ELOG_OUTPUT_LVL == ELOG_LVL_VERBOSE */
 #endif /* ELOG_OUTPUT_ENABLE */
 
@@ -199,13 +223,18 @@ int8_t elog_find_lvl(const char *log);
 const char *elog_find_tag(const char *log, uint8_t lvl, size_t *tag_len);
 void elog_hexdump(const char *name, uint8_t width, uint8_t *buf, uint16_t size);
 
-#define elog_a(tag, ...)     elog_assert(tag, __VA_ARGS__)
-#define elog_e(tag, ...)     elog_error(tag, __VA_ARGS__)
-#define elog_w(tag, ...)     elog_warn(tag, __VA_ARGS__)
-#define elog_i(tag, ...)     elog_info(tag, __VA_ARGS__)
-#define elog_d(tag, ...)     elog_debug(tag, __VA_ARGS__)
-#define elog_v(tag, ...)     elog_verbose(tag, __VA_ARGS__)
-
+#define elog_a(tag, ...)                            elog_assert(tag, __VA_ARGS__)
+#define elog_a_i(tag, file, func, line, ...)        elog_assert_info(tag, file, func, line, __VA_ARGS__)
+#define elog_e(tag, ...)                            elog_error(tag, __VA_ARGS__)
+#define elog_e_i(tag, file, func, line, ...)        elog_error_info(tag, file, func, line, __VA_ARGS__)
+#define elog_w(tag, ...)                            elog_warn(tag, __VA_ARGS__)
+#define elog_w_i(tag, file, func, line, ...)        elog_warn_info(tag, file, func, line, __VA_ARGS__)
+#define elog_i(tag, ...)                            elog_info(tag, __VA_ARGS__)
+#define elog_i_i(tag, file, func, line, ...)        elog_info_info(tag, file, func, line, __VA_ARGS__)
+#define elog_d(tag, ...)                            elog_debug(tag, __VA_ARGS__)
+#define elog_d_i(tag, file, func, line, ...)        elog_debug_info(tag, file, func, line, __VA_ARGS__)
+#define elog_v(tag, ...)                            elog_verbose(tag, __VA_ARGS__)
+#define elog_v_i(tag, file, func, line, ...)        elog_verbose_info(tag, file, func, line, __VA_ARGS__)
 /**
  * log API short definition
  * NOTE: The `LOG_TAG` and `LOG_LVL` must defined before including the <elog.h> when you want to use log_x API.
@@ -217,34 +246,46 @@ void elog_hexdump(const char *name, uint8_t width, uint8_t *buf, uint16_t size);
     #define LOG_LVL          ELOG_LVL_VERBOSE
 #endif
 #if LOG_LVL >= ELOG_LVL_ASSERT
-    #define log_a(...)       elog_a(LOG_TAG, __VA_ARGS__)
+    #define log_a(...)                          elog_a(LOG_TAG, __VA_ARGS__)
+    #define log_a_i(file, func, line, ...)      elog_a_i(LOG_TAG, file, func, line, __VA_ARGS__)
 #else
-    #define log_a(...)       ((void)0);
+    #define log_a(...)                          ((void)0);
+    #define log_a_i(file, func, line, ...)      ((void)0);
 #endif
 #if LOG_LVL >= ELOG_LVL_ERROR
-    #define log_e(...)       elog_e(LOG_TAG, __VA_ARGS__)
+    #define log_e(...)                          elog_e(LOG_TAG, __VA_ARGS__)
+    #define log_e_i(file, func, line, ...)      elog_e_i(LOG_TAG, file, func, line, __VA_ARGS__)
 #else
-    #define log_e(...)       ((void)0);
+    #define log_e(...)                          ((void)0);
+    #define log_e_i(file, func, line, ...)      ((void)0);
 #endif
 #if LOG_LVL >= ELOG_LVL_WARN
-    #define log_w(...)       elog_w(LOG_TAG, __VA_ARGS__)
+    #define log_w(...)                          elog_w(LOG_TAG, __VA_ARGS__)
+    #define log_w_i(file, func, line, ...)      elog_w_i(LOG_TAG, file, func, line, __VA_ARGS__)
 #else
-    #define log_w(...)       ((void)0);
+    #define log_w(...)                          ((void)0);
+    #define log_w_i(file, func, line, ...)      ((void)0);
 #endif
 #if LOG_LVL >= ELOG_LVL_INFO
-    #define log_i(...)       elog_i(LOG_TAG, __VA_ARGS__)
+    #define log_i(...)                          elog_i(LOG_TAG, __VA_ARGS__)
+    #define log_i_i(file, func, line, ...)      elog_i_i(LOG_TAG, file, func, line, __VA_ARGS__)
 #else
-    #define log_i(...)       ((void)0);
+    #define log_i(...)                          ((void)0);
+    #define log_i_i(file, func, line, ...)      ((void)0);
 #endif
 #if LOG_LVL >= ELOG_LVL_DEBUG
-    #define log_d(...)       elog_d(LOG_TAG, __VA_ARGS__)
+    #define log_d(...)                          elog_d(LOG_TAG, __VA_ARGS__)
+    #define log_d_i(file, func, line, ...)      elog_d_i(LOG_TAG, file, func, line, __VA_ARGS__)
 #else
-    #define log_d(...)       ((void)0);
+    #define log_d(...)                          ((void)0);
+    #define log_d_i(file, func, line, ...)      ((void)0);
 #endif
 #if LOG_LVL >= ELOG_LVL_VERBOSE
-    #define log_v(...)       elog_v(LOG_TAG, __VA_ARGS__)
+    #define log_v(...)                          elog_v(LOG_TAG, __VA_ARGS__)
+    #define log_v_i(file, func, line, ...)      elog_v_i(LOG_TAG, file, func, line, __VA_ARGS__)
 #else
-    #define log_v(...)       ((void)0);
+    #define log_v(...)                          ((void)0);
+    #define log_v_i(file, func, line, ...)      ((void)0);
 #endif
 
 /* assert API short definition */
