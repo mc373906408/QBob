@@ -5,12 +5,17 @@
 #include "TranslateAPI/Baidu/BaiduTranslation.h"
 #include "ScreenCapture/ScreenCapture.h"
 #include "Tools/WindowHook.h"
+#include "log/ThirdEasyLogger.h"
 
 int main(int argc, char *argv[])
 {
     /*QT6现在默认支持并开启highDPI https://doc.qt.io/qt-6/highdpi.html*/
     QApplication app(argc, argv);
-
+	
+	/*初始化Log*/
+	//ThirdEasyLogger::getInstance()->ThirdEasyLoggerSet("F:/Git/qtPro/qtPro1/qtPro2/qtPro3");
+    ThirdEasyLogger::getInstance()->ThirdEasyLoggerSet();
+	
     BaiduTranslation m_TextTranslation("20201020000594558","MB7lLwBLXBBL9I6iWje8");
     m_TextTranslation.getTranslation("Banana",Translate_Language_AUTO,Translate_Language_ZH);
 
