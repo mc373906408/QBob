@@ -9,7 +9,7 @@ QBob灵感来自于ripperhe/Bob(https://github.com/ripperhe/Bob)。
 - [x] 日志模组更换EasyLogger（https://github.com/armink/EasyLogger）
 - [x] 百度翻译 API
 - [ ] 百度OCR API
-- [ ] Windows hock （键盘、鼠标事件捕获）
+- [x] Windows hock （键盘、鼠标事件捕获）
 - [ ] QML界面
 - [ ] QML UI层与C++逻辑层通讯
 - [ ] 鼠标选中区域截屏
